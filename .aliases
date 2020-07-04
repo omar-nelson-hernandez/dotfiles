@@ -1,2 +1,3 @@
 # list all files with colors
-alias ls='ls -alt --color=auto'
+alias lsa='ls -alt --color=auto'
+alias ls='ls -lt --color=auto'
