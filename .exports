@@ -14,3 +14,6 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 # select defaul editor
 export VISUAL=vim
 export EDITOR="$VISUAL"
+
+# add Rust binaries to path (including compiler and navi)
+PATH=~/.cargo/bin/:$PATH
