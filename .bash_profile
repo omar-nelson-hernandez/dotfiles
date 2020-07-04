@@ -31,4 +31,4 @@ if ! shopt -oq posix; then
 fi
 
 # Added for Navi
-source <(/home/rurushu/.cargo/bin/navi widget bash)
+source <(navi widget bash)
