@@ -1,0 +1,25 @@
+function rs()
+{
+  LOG_FILE=~/rsync_exec.log
+  START_TIME=$(date +'%s')
+
+  echo "Starting script" > ${LOG_FILE}
+  echo "Start time: $(date)" | tee -a ${LOG_FILE}
+  echo "Log file: ${LOG_FILE}" | tee -a ${LOG_FILE}
+  echo "Source dir: $1" | tee -a ${LOG_FILE}
+  echo "Target dir: $2" | tee -a ${LOG_FILE}
+  echo "Excludes: $3" | tee -a ${LOG_FILE}
+
+  SRC_DIR=${1:?No source dir specified}
+  TARGET_DIR=${2:?No target dir specified}
+  EXCL_FILTER=${3:+--exclude=$3}
+
+  nohup rsync --verbose --archive --one-file-system --partial --progress --update ${SRC_DIR} ${TARGET_DIR} ${EXCL_FILTER} --delete 2>&1 >> ${LOG_FILE}
+
+  END_TIME=$(date +'%s')
+
+  echo "End time: $(date)" | tee -a ${LOG_FILE}
+  ELAPSED_TIME=$((${END_TIME} - ${START_TIME}))
+  ELAPSED_TIME_HUMAN=$(date -d@${ELAPSED_TIME} -u +%H:%M:%S)
+  echo "Elapsed time: ${ELAPSED_TIME_HUMAN}" | tee -a ${LOG_FILE}
+}
