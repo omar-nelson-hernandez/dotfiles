@@ -1,0 +1,2 @@
+alias ape="source ~/coding/.venv/bin/activate"
+alias ts="~/binaries/tmux/tmux-create-sessions.sh"

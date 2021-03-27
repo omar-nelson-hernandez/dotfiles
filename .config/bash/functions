@@ -23,3 +23,8 @@ function rs()
   ELAPSED_TIME_HUMAN=$(date -d@${ELAPSED_TIME} -u +%H:%M:%S)
   echo "Elapsed time: ${ELAPSED_TIME_HUMAN}" | tee -a ${LOG_FILE}
 }
+
+function dff()
+{
+  diff --side-by-side --ignore-case --ignore-tab-expansion --ignore-all-space --ignore-blank-lines --suppress-common-lines --ignore-blank-lines --color=always $1 $2
+}

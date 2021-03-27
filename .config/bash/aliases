@@ -1,0 +1,4 @@
+# list all files with colors
+alias lh='ls -alt --color=auto'
+alias ll='ls -lt --color=auto'
+alias differ='diff --side-by-side --ignore-case --ignore-tab-expansion --ignore-all-space --ignore-blank-lines --suppress-common-lines --ignore-blank-lines --color=always'
