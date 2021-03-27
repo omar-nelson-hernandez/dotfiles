@@ -1,0 +1,118 @@
+##########
+# Bars
+##########
+[bar/base]
+
+font-0 = "Terminus:style=Medium:size=15"
+font-1 = "FontAwesome:style=Regular"
+font-2 = "Glitch Inside:style=Regular"
+
+padding-left = 2
+padding-right = 2
+
+module-margin = 2
+
+monitor = ${env:MONITOR:}
+
+separator = |
+
+[bar/top]
+
+inherit = bar/base
+
+modules-left = filesystem cpu memory network
+modules-center = date
+modules-right = timer ticker
+
+[bar/bottom]
+
+inherit = bar/base
+
+bottom = true
+
+modules-left =
+modules-center = i3
+modules-right =
+
+tray-position = right
+
+##########
+# Modules
+##########
+
+[module/i3]
+type = internal/i3
+
+pin-workspaces = true
+
+label-focused = [%index%]
+
+label-separator = |
+label-separator-padding = 2
+
+[module/cpu]
+type = internal/cpu
+interval = 1
+
+format = <label>
+
+label = CPU %percentage%%
+
+[module/date]
+type = internal/date
+
+format =  <label>
+
+label = %date%
+
+date = %j / 365 | %c | %Y-%m-%d
+
+[module/filesystem]
+type = internal/fs
+
+mount-0 = /
+
+label-mounted =  %percentage_used%% [%used%/%total%]
+
+[module/memory]
+type = internal/memory
+
+interval = 1
+
+format = <label>
+
+label = RAM %gb_used%/%gb_total%
+
+[module/network]
+type = internal/network
+
+interface = eth2
+
+format-connected = <label-connected>
+
+format-packetloss = <animation-packetloss> <label-connected>
+
+label-connected =  %ifname% [%linkspeed%] %local_ip% %local_ip6%  %upspeed%  %downspeed%
+label-disconnected = not connected
+
+animation-packetloss-0 = 
+animation-packetloss-1 = 
+animation-packetloss-framerate = 500
+
+[module/ticker]
+type = custom/script
+
+exec = NO_COLOR=1 ~/binaries/ticker/ticker.sh GME
+
+[module/timer]
+
+type = custom/script
+
+exec = ~/binaries/polybar-timer/polybar-timer.sh tail 'TIMER' 1
+tail = true
+
+click-left = ~/binaries/polybar-timer/polybar-timer.sh new 30 'Pomo session' 'notify-send "Session finished"' ; ~/binaries/polybar-timer/polybar-timer.sh update %pid%
+click-middle = ~/binaries/polybar-timer/polybar-timer.sh cancel ; ~/binaries/polybar-timer/polybar-timer.sh update %pid%
+click-right = ~/binaries/polybar-timer/polybar-timer.sh new 5 'Pomo break' 'notify-send "Break finished"' ; ~/binaries/polybar-timer/polybar-timer.sh update %pid%
+scroll-up = ~/binaries/polybar-timer/polybar-timer.sh increase 60 || ~/binaries/polybar-timer/polybar-timer.sh new 1 'TIMER:' 'notify-send -u critical "Timer expired."' ; ~/binaries/polybar-timer/polybar-timer.sh update %pid%
+scroll-down = ~/binaries/polybar-timer/polybar-timer.sh increase -60 ; ~/binaries/polybar-timer/polybar-timer.sh update %pid%
