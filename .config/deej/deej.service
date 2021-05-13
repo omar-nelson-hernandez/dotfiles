@@ -1,0 +1,13 @@
+[Unit]
+Description=Deej service
+After=pulseaudio.service
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+ExecStart=/home/rurushu/binaries/deej/deej-release
+WorkingDirectory=/home/rurushu/binaries/deej/
+
+[Install]
+WantedBy=pulseaudio.service

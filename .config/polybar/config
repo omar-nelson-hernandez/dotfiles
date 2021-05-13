@@ -1,0 +1,171 @@
+##########
+# Aplication settings
+##########
+
+[colors]
+
+underline = #c412b8
+overline = #c412b8
+background = #04001a
+foreground = #08b5ff
+selected-bg = #0e015e
+
+[settings]
+
+format-foreground = 
+format-background = 
+format-spacing =
+format-padding =
+format-margin =
+format-offset =
+
+pseudo-transparency = true
+
+##########
+# Bars
+##########
+[bar/base]
+
+font-0 = "VictorMono Nerd Font Mono:style=Regular;1"
+padding-left = 2
+padding-right = 2
+module-margin = 1
+monitor = ${env:MONITOR:}
+line-size = 2
+background = ${colors.background}
+foreground = ${colors.foreground}
+border-size = 1
+border-color = ${colors.foreground}
+
+[bar/top]
+
+inherit = bar/base
+
+modules-left = filesystem cpu memory network
+modules-center = date
+modules-right = timer ticker
+
+[bar/bottom]
+
+inherit = bar/base
+
+bottom = true
+
+modules-left =
+modules-center = i3
+modules-right = pulseaudio-control
+
+tray-position = right
+tray-padding = 10
+
+##########
+# Modules
+##########
+
+[module/i3]
+type = internal/i3
+
+pin-workspaces = true
+
+label-focused = [%index%]
+label-focused-background = ${colors.selected-bg}
+
+label-separator = " "
+label-separator-padding = 1
+
+[module/cpu]
+type = internal/cpu
+interval = 1
+
+format-prefix = "龍 "
+format = <label>
+format-underline = ${colors.underline}
+
+label = %percentage%%
+
+[module/date]
+type = internal/date
+
+format-prefix = " "
+format = <label>
+
+label = %date%
+
+date = %j / 365 | %c | %Y-%m-%d
+
+format-underline = ${colors.underline}
+
+[module/filesystem]
+type = internal/fs
+
+mount-0 = /
+
+format-mounted-prefix = " "
+label-mounted = %percentage_used%%
+format-mounted-underline = ${colors.underline}
+
+[module/memory]
+type = internal/memory
+
+interval = 1
+
+format-prefix = " "
+format = <label>
+
+label = %gb_used%/%gb_total%
+
+format-underline = ${colors.underline}
+
+[module/network]
+type = internal/network
+
+interface = eth2
+
+format-connected-prefix = " "
+format-connected = <label-connected>
+
+format-packetloss = <animation-packetloss> <label-connected>
+
+label-connected = %ifname% [%linkspeed%]  %upspeed%  %downspeed%
+label-disconnected = not connected
+
+animation-packetloss-0 = 
+animation-packetloss-1 = 
+animation-packetloss-framerate = 500
+
+format-connected-underline = ${colors.underline}
+
+[module/ticker]
+
+type = custom/script
+exec = NO_COLOR=1 ~/binaries/ticker/ticker.sh GME
+format-prefix = " "
+format-underline = ${colors.underline}
+
+[module/timer]
+
+type = custom/script
+format-prefix = " "
+exec = ~/binaries/polybar-timer/polybar-timer.sh tail 'TIMER' 1
+tail = true
+
+click-left = ~/binaries/polybar-timer/polybar-timer.sh new 45 'Pomo session' 'notify-send -u critical "Session finished"' ; ~/binaries/polybar-timer/polybar-timer.sh update %pid%
+click-middle = ~/binaries/polybar-timer/polybar-timer.sh cancel ; ~/binaries/polybar-timer/polybar-timer.sh update %pid%
+click-right = ~/binaries/polybar-timer/polybar-timer.sh new 5 'Pomo break' 'notify-send "Break finished"' ; ~/binaries/polybar-timer/polybar-timer.sh update %pid%
+scroll-up = ~/binaries/polybar-timer/polybar-timer.sh increase 60 || ~/binaries/polybar-timer/polybar-timer.sh new 1 'TIMER:' 'notify-send -u critical "Timer expired."' ; ~/binaries/polybar-timer/polybar-timer.sh update %pid%
+scroll-down = ~/binaries/polybar-timer/polybar-timer.sh increase -60 ; ~/binaries/polybar-timer/polybar-timer.sh update %pid%
+
+format-underline = ${colors.underline}
+
+[module/pulseaudio-control]
+
+type = custom/script
+tail = true
+format-underline = ${colors.underline}
+label-padding = 2
+exec = pulseaudio-control.sh --icons-volume " , " --icon-muted " " --sink-nicknames-from "device.description" --sink-nickname "alsa_output.pci-0000_0b_00.4.analog-stereo:  Speakers" --sink-nickname "alsa_output.usb-Astro_Gaming_Astro_MixAmp_Pro-00.analog-stereo:  Headphones" listen
+click-right = exec pavucontrol &
+click-left = pulseaudio-control.sh togmute
+click-middle = pulseaudio-control.sh --sink-blacklist "alsa_output.pci-0000_09_00.1.hdmi-stereo" next-sink
+scroll-up = pulseaudio-control.sh --volume-max 130 up
+scroll-down = pulseaudio-control.sh --volume-max 130 down
