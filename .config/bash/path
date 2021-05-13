@@ -1,1 +1,1 @@
-export PATH=$PATH:~/binaries
+export PATH=$PATH:~/binaries:~/bin/
