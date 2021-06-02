@@ -1,0 +1,15 @@
+# Root window
+new_tab root
+title root
+launch bash -c 'su -'
+
+# notebook
+new_tab notebook
+title notebook
+cd /storage/notebook
+launch nvim
+
+# term
+new_tab term
+title term
+launch bash

@@ -1,0 +1,22 @@
+# Root window
+new_tab root
+title root
+launch bash -c 'su -'
+
+# notebook
+new_tab notebook
+title notebook
+cd /storage/notebook
+launch nvim
+
+# code
+new_tab code
+title code
+cd ~/coding
+launch nvim
+
+# execute
+new_tab execute
+title execute
+cd ~/coding
+launch bash

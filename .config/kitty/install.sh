@@ -8,3 +8,7 @@ mkdir -p ~/.config/kitty
 ln -s ${SCRIPTPATH}/kitty.conf ~/.config/kitty/kitty.conf
 
 echo "Installed kitty config"
+
+ln -s ${SCRIPTPATH}/*.session ~/.config/kitty/
+
+echo "Installed kitty sessions"
