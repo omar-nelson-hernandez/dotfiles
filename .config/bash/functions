@@ -1,6 +1,6 @@
 function rs()
 {
-  LOG_FILE=~/rsync_exec.log
+  LOG_FILE=~/rsync_exec.$(date +'%Y%m%d-%H%M%S').log
   START_TIME=$(date +'%s')
 
   echo "Starting script" > ${LOG_FILE}
